@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Customer Login — EUGINE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+
+  <header class="top-bar top-bar--enter">
+    <div class="top-bar__inner">
+      <div class="brand">
+        <a href="index.html" class="logo-link">
+          <img class="brand-logo-img" src="https://cdn.discordapp.com/icons/1488555296946262077/be907518412fcd4a10a57e9b159a075d.webp?size=100" width="40" height="40" alt="EUGINE" decoding="async" />
+          <span class="logo">EUGINE</span>
+        </a>
+        <span class="badge">#1 Trusted Cheat Provider</span>
+      </div>
+      <a class="btn-login" href="login.html">Customer Login</a>
+    </div>
+  </header>
+
+  <nav class="main-nav nav--enter">
+    <div class="main-nav__inner">
+      <ul class="nav-links">
+        <li><a href="index.html"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</a></li>
+        <li><a href="index.html#products"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>Products</a></li>
+        <li><a href="status.html"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Status</a></li>
+        <li><a href="terms.html"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Terms</a></li>
+        <li><a href="reviews.html"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Reviews</a></li>
+        <li><a href="blog.html"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Blog</a></li>
+      </ul>
+      <label class="search-wrap">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="search" placeholder="Search for Products" autocomplete="off" />
+      </label>
+    </div>
+  </nav>
+
+  <main class="page-wrap page-wrap--wide reveal">
+    <h1 class="page-title" style="text-align:center">Customer <span class="outline">Login</span></h1>
+    <p class="page-lede" style="text-align:center">Sign in with your username and password.</p>
+
+    <div class="login-portal co-card--enter">
+      <div class="login-portal__tabs" role="tablist">
+        <button type="button" class="login-portal__tab is-active" role="tab" aria-selected="true" data-tab="user" id="tab-btn-user">Username / password</button>
+        <button type="button" class="login-portal__tab" role="tab" aria-selected="false" data-tab="hwid" id="tab-btn-hwid">HWID</button>
+        <button type="button" class="login-portal__tab is-locked" role="tab" aria-selected="false" data-tab="owned" id="tab-btn-owned" disabled aria-disabled="true">Owned products</button>
+      </div>
+
+      <p id="login-global-msg" class="login-msg login-msg--error" role="alert"></p>
+
+      <div id="login-loading" class="login-loading" aria-live="polite">Authenticating…</div>
+
+      <div id="panel-user" class="login-portal__panel is-active" role="tabpanel" aria-labelledby="tab-btn-user">
+        <div class="form-card">
+          <form id="form-user">
+            <div class="form-group">
+              <label for="cg_username">Username</label>
+              <input id="cg_username" type="text" autocomplete="username" placeholder="Username" required />
+            </div>
+            <div class="form-group">
+              <label for="cg_password">Password</label>
+              <input id="cg_password" type="password" autocomplete="current-password" placeholder="Password" required />
+            </div>
+            <button type="submit" class="btn-primary">Authenticate</button>
+            <p class="form-hint">User login — same credentials as your product account.</p>
+          </form>
+        </div>
+      </div>
+
+      <div id="panel-hwid" class="login-portal__panel" role="tabpanel" aria-labelledby="tab-btn-hwid" hidden>
+        <div class="form-card hwid-block">
+          <p style="margin:0 0 0.5rem;font-size:0.9rem;color:#d4d4d4">Browser fingerprint used as HWID</p>
+          <code id="hwid-value" title="Click to copy">Loading…</code>
+          <small>Click the code to copy to clipboard</small>
+        </div>
+      </div>
+
+      <div id="panel-owned" class="login-portal__panel" role="tabpanel" aria-labelledby="tab-btn-owned" hidden>
+        <div class="owned-wrap">
+          <div class="owned-card">
+            <div class="owned-card__top">
+              <div class="owned-card__visual">
+                <div class="co-box-art co-box-art--photo" style="max-width:220px;min-height:auto">
+                  <img class="co-box-art__img" src="https://i.ibb.co/XftDVYdq/image.png" alt="Roblox External" width="220" height="275" decoding="async" />
+                  <span class="co-box-art__brand">EUGINE</span>
+                  <span class="co-box-art__product" id="owned-product-sub">Roblox External</span>
+                </div>
+              </div>
+              <div class="owned-card__info">
+                <h2 class="owned-card__title" id="owned-title">Roblox External</h2>
+                <div class="co-badges" style="margin-bottom:1rem">
+                  <span class="co-badge co-badge--instant">
+                    <svg class="co-badge__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z"/></svg>
+                    Owned
+                  </span>
+                  <span class="co-badge co-badge--safe" id="owned-status-badge">
+                    <span class="co-badge__dot"></span>
+                    <span id="owned-status-text">Active</span>
+                  </span>
+                </div>
+                <div class="owned-card__meta" id="owned-meta"></div>
+                <div class="owned-card__actions">
+                  <a id="btn-download-loader" class="btn-loader" href="https://gofile.io/d/1Vi3FQ">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Download loader
+                  </a>
+                  <button type="button" class="btn-signout" id="btn-signout">Sign out</button>
+                </div>
+              </div>
+            </div>
+            <div class="co-panels" style="border-top:1px solid #1f1f1f">
+              <div class="co-panel is-active" style="display:block;padding:1rem 1.25rem;font-size:0.875rem;color:#a3a3a3;line-height:1.55">
+               <strong style="color:var(--accent)"></strong> 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer site-footer--full reveal">
+    <div class="site-footer__grid">
+      <div class="site-footer__brand">
+        <a href="index.html" class="logo-link">
+          <img class="brand-logo-img" src="https://cdn.discordapp.com/icons/1488555296946262077/be907518412fcd4a10a57e9b159a075d.webp?size=100" width="40" height="40" alt="EUGINE" decoding="async" />
+          <span class="logo">EUGINE</span>
+        </a>
+        <p>Roblox cheats and tools. Demo storefront — not affiliated with Roblox Corporation.</p>
+      </div>
+      <div>
+        <h3>Shop</h3>
+        <ul class="site-footer__links">
+          <li><a href="index.html#products">Roblox External</a></li>
+          <li><a href="status.html">Product status</a></li>
+          <li><a href="checkout.html">Checkout</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Legal</h3>
+        <ul class="site-footer__links">
+          <li><a href="terms.html">Terms of service</a></li>
+          <li><a href="terms.html#refund">Refund policy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Community</h3>
+        <ul class="site-footer__links">
+          <li><a href="reviews.html">Reviews</a></li>
+          <li><a href="blog.html">Blog</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Account</h3>
+        <ul class="site-footer__links">
+          <li><a href="login.html">Customer login</a></li>
+          <li><a href="mailto:support@eugine.example">support@eugine.example</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="site-footer__bottom">© 2026 EUGINE. All rights reserved. Not affiliated with Roblox Corporation or any game publisher.</div>
+  </footer>
+
+  <script src="cgauth.js"></script>
+  <script>
+    (function () {
+      var SESSION_KEY = "eugine_cgauth_session_v1";
+      /** Set to your hosted loader (.exe / .zip). Placeholder until you deploy the file. */
+      var EUGINE_LOADER_URL = "https://gofile.io/d/1Vi3FQ";
+
+      function parseAuthResult(result) {
+        if (!result || typeof result !== "object") {
+          return { ok: false, error: "No response from server", data: null, raw: result };
+        }
+        if (result.success === false) {
+          return { ok: false, error: result.error || result.message || "Authentication failed", data: null, raw: result };
+        }
+        var inner = result.data !== undefined && result.data !== null ? result.data : result;
+        if (result.success === true) {
+          return { ok: true, data: inner, raw: result };
+        }
+        if (inner && (inner.status !== undefined || inner.app_name !== undefined || inner.days_remaining !== undefined || inner.expiry_date !== undefined)) {
+          return { ok: true, data: inner, raw: result };
+        }
+        if (result.error) {
+          return { ok: false, error: typeof result.error === "string" ? result.error : JSON.stringify(result.error), data: null, raw: result };
+        }
+        return { ok: false, error: "Unexpected response", data: null, raw: result };
+      }
+
+      function saveSession(parsed) {
+        try {
+          sessionStorage.setItem(SESSION_KEY, JSON.stringify({ savedAt: Date.now(), payload: parsed.data, raw: parsed.raw }));
+        } catch (e) {}
+      }
+
+      function loadSession() {
+        try {
+          var s = sessionStorage.getItem(SESSION_KEY);
+          if (!s) return null;
+          return JSON.parse(s);
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function clearSession() {
+        try {
+          sessionStorage.removeItem(SESSION_KEY);
+        } catch (e) {}
+      }
+
+      var tabBtns = document.querySelectorAll(".login-portal__tab");
+      var panels = {
+        user: document.getElementById("panel-user"),
+        hwid: document.getElementById("panel-hwid"),
+        owned: document.getElementById("panel-owned"),
+      };
+      var ownedTabBtn = document.getElementById("tab-btn-owned");
+      var globalMsg = document.getElementById("login-global-msg");
+      var loadingEl = document.getElementById("login-loading");
+
+      function hideGlobalMsg() {
+        globalMsg.classList.remove("is-visible", "login-msg--error", "login-msg--ok");
+        globalMsg.textContent = "";
+      }
+
+      function showGlobalMsg(text, ok) {
+        globalMsg.textContent = text;
+        globalMsg.classList.add("is-visible");
+        globalMsg.classList.toggle("login-msg--ok", !!ok);
+        globalMsg.classList.toggle("login-msg--error", !ok);
+      }
+
+      function setLoading(on) {
+        loadingEl.classList.toggle("is-visible", on);
+      }
+
+      function switchTab(name, focusBtn) {
+        hideGlobalMsg();
+        tabBtns.forEach(function (b) {
+          var t = b.getAttribute("data-tab");
+          var active = t === name;
+          b.classList.toggle("is-active", active);
+          b.setAttribute("aria-selected", active ? "true" : "false");
+        });
+        Object.keys(panels).forEach(function (key) {
+          var p = panels[key];
+          var active = key === name;
+          p.classList.toggle("is-active", active);
+          p.hidden = !active;
+        });
+        if (focusBtn) focusBtn.focus();
+      }
+
+      function unlockOwnedTab() {
+        ownedTabBtn.disabled = false;
+        ownedTabBtn.classList.remove("is-locked");
+        ownedTabBtn.setAttribute("aria-disabled", "false");
+      }
+
+      function esc(s) {
+        if (s === undefined || s === null) return "—";
+        var d = document.createElement("div");
+        d.textContent = String(s);
+        return d.innerHTML;
+      }
+
+      function renderOwned(data) {
+        var d = data || {};
+        var title = d.app_name || d.product_name || d.license_name || "Roblox External";
+        document.getElementById("owned-title").textContent = title;
+        document.getElementById("owned-product-sub").textContent = title;
+
+        var status = d.status != null ? String(d.status) : "Active";
+        document.getElementById("owned-status-text").textContent = status;
+
+        var meta = document.getElementById("owned-meta");
+        var rows = [];
+        if (d.days_remaining !== undefined) rows.push("<div><strong>Days remaining</strong> " + esc(d.days_remaining) + "</div>");
+        if (d.hours_remaining !== undefined) rows.push("<div><strong>Hours remaining</strong> " + esc(d.hours_remaining) + "</div>");
+        if (d.expiry_date) rows.push("<div><strong>Expiry</strong> " + esc(d.expiry_date) + "</div>");
+        if (rows.length === 0) {
+          rows.push("<div><strong>Account</strong> Signed in</div>");
+        }
+        meta.innerHTML = rows.join("");
+
+        var dl = document.getElementById("btn-download-loader");
+        dl.href = EUGINE_LOADER_URL && EUGINE_LOADER_URL !== "#" ? EUGINE_LOADER_URL : "#";
+      }
+
+      function onAuthSuccess(parsed) {
+        saveSession(parsed);
+        unlockOwnedTab();
+        renderOwned(parsed.data);
+        switchTab("owned", ownedTabBtn);
+        showGlobalMsg("Signed in successfully.", true);
+      }
+
+      tabBtns.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          if (btn.disabled) return;
+          switchTab(btn.getAttribute("data-tab"), btn);
+        });
+      });
+
+      document.getElementById("form-user").addEventListener("submit", async function (e) {
+        e.preventDefault();
+        hideGlobalMsg();
+        var u = document.getElementById("cg_username").value.trim();
+        var p = document.getElementById("cg_password").value;
+        setLoading(true);
+        var hwid = await CGAuth.getHWID();
+        var result = await CGAuth.authUser(u, p, hwid);
+        setLoading(false);
+        var parsed = parseAuthResult(result);
+        if (parsed.ok) onAuthSuccess(parsed);
+        else showGlobalMsg(parsed.error || "Login failed", false);
+      });
+
+      document.getElementById("btn-download-loader").addEventListener("click", function (e) {
+        if (!EUGINE_LOADER_URL || EUGINE_LOADER_URL === "#") {
+          e.preventDefault();
+          alert("Set EUGINE_LOADER_URL in login.html to your loader download URL.");
+        }
+      });
+
+      document.getElementById("btn-signout").addEventListener("click", function () {
+        clearSession();
+        ownedTabBtn.disabled = true;
+        ownedTabBtn.classList.add("is-locked");
+        ownedTabBtn.setAttribute("aria-disabled", "true");
+        hideGlobalMsg();
+        switchTab("user", document.getElementById("tab-btn-user"));
+      });
+
+      document.getElementById("hwid-value").addEventListener("click", async function () {
+        var el = document.getElementById("hwid-value");
+        var t = el.textContent;
+        if (!t || t === "Loading…") return;
+        try {
+          await navigator.clipboard.writeText(t);
+          showGlobalMsg("HWID copied to clipboard.", true);
+          setTimeout(hideGlobalMsg, 2000);
+        } catch (err) {
+          showGlobalMsg("Could not copy. Select the text manually.", false);
+        }
+      });
+
+      window.addEventListener("load", async function () {
+        if (window.location.protocol === "file:") {
+          showGlobalMsg(
+            "Opened as a file: login cannot reach auth.",
+            false
+          );
+        }
+
+        var hwid = await CGAuth.getHWID();
+        document.getElementById("hwid-value").textContent = hwid;
+
+        var sess = loadSession();
+        if (sess && sess.payload) {
+          unlockOwnedTab();
+          renderOwned(sess.payload);
+          switchTab("owned", ownedTabBtn);
+        }
+      });
+    })();
+  </script>
+  <script src="site.js" defer></script>
+</body>
+</html>
