@@ -76,9 +76,12 @@
 
       <div id="panel-hwid" class="login-portal__panel" role="tabpanel" aria-labelledby="tab-btn-hwid" hidden>
         <div class="form-card hwid-block">
-          <p style="margin:0 0 0.5rem;font-size:0.9rem;color:#d4d4d4">Browser fingerprint used as HWID</p>
-          <code id="hwid-value" title="Click to copy">Loading…</code>
-          <small>Click the code to copy to clipboard</small>
+          <p style="margin:0 0 0.5rem;font-size:0.9rem;color:#d4d4d4">Enter your account HWID used for login</p>
+          <div class="form-group" style="margin:0">
+            <label for="cg_hwid_input">HWID</label>
+            <input id="cg_hwid_input" type="text" placeholder="Paste your HWID" autocomplete="off" />
+          </div>
+          <small>Paste the exact HWID from your loader/account panel</small>
         </div>
       </div>
 
@@ -316,8 +319,15 @@
         hideGlobalMsg();
         var u = document.getElementById("cg_username").value.trim();
         var p = document.getElementById("cg_password").value;
+        var hwidInput = document.getElementById("cg_hwid_input");
+        var hwid = hwidInput.value.trim();
+        if (!hwid) {
+          showGlobalMsg("Please enter your HWID in the HWID tab before logging in.", false);
+          switchTab("hwid", document.getElementById("tab-btn-hwid"));
+          hwidInput.focus();
+          return;
+        }
         setLoading(true);
-        var hwid = await CGAuth.getHWID();
         var result = await CGAuth.authUser(u, p, hwid);
         setLoading(false);
         var parsed = parseAuthResult(result);
@@ -341,19 +351,6 @@
         switchTab("user", document.getElementById("tab-btn-user"));
       });
 
-      document.getElementById("hwid-value").addEventListener("click", async function () {
-        var el = document.getElementById("hwid-value");
-        var t = el.textContent;
-        if (!t || t === "Loading…") return;
-        try {
-          await navigator.clipboard.writeText(t);
-          showGlobalMsg("HWID copied to clipboard.", true);
-          setTimeout(hideGlobalMsg, 2000);
-        } catch (err) {
-          showGlobalMsg("Could not copy. Select the text manually.", false);
-        }
-      });
-
       window.addEventListener("load", async function () {
         if (window.location.protocol === "file:") {
           showGlobalMsg(
@@ -361,9 +358,6 @@
             false
           );
         }
-
-        var hwid = await CGAuth.getHWID();
-        document.getElementById("hwid-value").textContent = hwid;
 
         var sess = loadSession();
         if (sess && sess.payload) {
@@ -377,3 +371,4 @@
   <script src="site.js" defer></script>
 </body>
 </html>
+
